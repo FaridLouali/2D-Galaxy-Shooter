@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
     [SerializeField]
     private GameObject laserPrefab;
+    [SerializeField]
+    private int _lives = 5;
+
     //variables for the cooldown system
     public float fireRate = 0.5f;
     private float _canFire = -1f; // start timing for the next firing.
@@ -59,5 +62,14 @@ public class Player : MonoBehaviour
             _canFire = Time.time + fireRate;
             Instantiate(laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
         }
+    public void Damage()
+    {
+        _lives--;
+       if(_lives <1) //check if dead
+        {
+            Destroy(this.gameObject); //destroy us
+        }
+        
+    }
     
 }
