@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Laser
   - Enemy
+  - Farid
+  - Mohamed
+  - Toto
+  - John
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject laserPrefab;
     [SerializeField]
-    private int _lives = 5;
+    private int _lives = 3;
+    private SpawnManager _spawnManager;
 
     //variables for the cooldown system
     public float fireRate = 0.5f;
@@ -18,7 +19,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);   
+        transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+
+        if(_spawnManager == null)
+        {
+            Debug.LogError("The Spawn Manager is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -65,9 +72,14 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         _lives--;
-       if(_lives <1) //check if dead
+        Debug.Log(_lives);
+       if(_lives <1)
         {
-            Destroy(this.gameObject); //destroy us
+            // communicate with the Spawn manager
+            // let them know to stop spawning
+            _spawnManager.OnPlayerDeath();
+            Destroy(this.gameObject); 
+
         }
         
     }
